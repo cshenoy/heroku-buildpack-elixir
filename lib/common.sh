@@ -80,15 +80,3 @@ export_config_vars() {
     done
   fi
 }
-
-export_mix_env() {
-  if [ -z "${MIX_ENV}" ]; then
-    if [ -d $env_dir ] && [ -f $env_dir/MIX_ENV ]; then
-      export MIX_ENV=$(cat $env_dir/MIX_ENV)
-    else
-      export MIX_ENV=prod
-    fi
-  fi
-
-  info "* MIX_ENV=${MIX_ENV}"
-}
