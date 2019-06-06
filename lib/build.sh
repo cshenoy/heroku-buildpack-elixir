@@ -1,5 +1,5 @@
 cleanup_cache() {
-  if [ $clean_cache = true ]; then
+  if [ "$clean_cache" = true ]; then
     info "clean_cache option set to true."
     info "Cleaning out cache contents"
     rm -rf $cache_dir/npm-version
@@ -44,16 +44,10 @@ cleanup_old_node() {
   # Note that $old_node will have a format of "v5.5.0" while $node_version
   # has the format "5.6.0"
 
-  if [ $clean_cache = true ] || [ $old_node != v$node_version ] && [ -f $old_node_dir ]; then
+  if [ "$clean_cache" = true ] || [ $old_node != v$node_version ] && [ -f $old_node_dir ]; then
     info "Cleaning up old Node $old_node and old dependencies in cache"
     rm $old_node_dir
     rm -rf $cache_dir/node_modules
-
-    local bower_components_dir=$cache_dir/bower_components
-
-    if [ -d $bower_components_dir ]; then
-      rm -rf $bower_components_dir
-    fi
   fi
 }
 
