@@ -22,13 +22,13 @@ file_contents() {
   fi
 }
 
-load_config() {
+load_assets_config() {
   info "Loading config..."
 
   local custom_config_file="${build_dir}/phoenix_static_buildpack.config"
 
   # Source for default versions file from buildpack first
-  source "${build_pack_dir}/phoenix_static_buildpack.config"
+  source "${build_pack_path}/phoenix_static_buildpack.config"
 
   if [ -f $custom_config_file ]; then
     source $custom_config_file
@@ -37,7 +37,7 @@ load_config() {
     info "Using default config from Phoenix static buildpack"
   fi
 
-  phoenix_dir=$build_dir/$phoenix_relative_path
+  phoenix_dir=$build_path/$phoenix_relative_path
 
   info "Detecting assets directory"
   if [ -f "$phoenix_dir/$assets_path/package.json" ]; then
