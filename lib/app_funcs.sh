@@ -18,7 +18,7 @@ function copy_hex() {
 
   # hex is a directory from elixir-1.3.0
   full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-* | head -n 1)
-
+  output_section "***** $full_hex_file_path"
   # hex file names after elixir-1.1 in the hex-<version>.ez form
   if [ -z "$full_hex_file_path" ]; then
     full_hex_file_path=$(ls -t ${HOME}/.mix/archives/hex-*.ez | head -n 1)
