@@ -25,7 +25,7 @@ file_contents() {
 load_assets_config() {
   info "Loading config..."
 
-  local custom_config_file="${build_dir}/phoenix_static_buildpack.config"
+  local custom_config_file="${build_path}/phoenix_static_buildpack.config"
 
   # Source for default versions file from buildpack first
   source "${build_pack_path}/phoenix_static_buildpack.config"
