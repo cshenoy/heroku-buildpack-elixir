@@ -29,6 +29,7 @@ mkdir $(platform_tools_path)
 cached_node=$cache_dir/node-v$node_version-linux-x64.tar.gz
 
 load_config
+load_assets_config
 export_env_vars
 export_mix_env
 
@@ -47,7 +48,15 @@ install_rebar
 # deprecated_hook, here for backwards compatibility
 pre_compile_hook
 
-##
+###
+head "Loading configuration and environment"
+load_previous_npm_node_versions
+load_config
+export_config_vars
+export_mix_env
+
+cached_node=$cache_dir/node-v$node_version-linux-x64.tar.gz
+
 head "Installing binaries"
 cleanup_cache
 download_node
@@ -59,7 +68,13 @@ fi
 
 head "Building dependencies"
 install_and_cache_deps
-##
+
+## Compile
+
+head "Finalizing build"
+cache_versions
+finalize_node
+###
 
 restore_app
 hook_pre_app_dependencies
