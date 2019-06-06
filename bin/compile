@@ -14,15 +14,19 @@ mkdir -p $1 $2 $3
 build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 env_path=$(cd $3 && pwd)
-
+heroku_dir=$build_dir/.heroku
 
 source ${build_pack_path}/lib/path_funcs.sh
 source ${build_pack_path}/lib/misc_funcs.sh
 source ${build_pack_path}/lib/erlang_funcs.sh
 source ${build_pack_path}/lib/elixir_funcs.sh
 source ${build_pack_path}/lib/app_funcs.sh
+source ${build_pack_dir}/lib/common.sh
+source ${build_pack_dir}/lib/build.sh
 
 mkdir $(platform_tools_path)
+
+cached_node=$cache_dir/node-v$node_version-linux-x64.tar.gz
 
 load_config
 export_env_vars
@@ -42,6 +46,20 @@ install_rebar
 
 # deprecated_hook, here for backwards compatibility
 pre_compile_hook
+
+##
+head "Installing binaries"
+cleanup_cache
+download_node
+install_node
+install_npm
+if [ -f "$assets_dir/yarn.lock" ]; then
+  install_yarn "$heroku_dir/yarn"
+fi
+
+head "Building dependencies"
+install_and_cache_deps
+##
 
 restore_app
 hook_pre_app_dependencies
